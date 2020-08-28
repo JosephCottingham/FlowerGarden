@@ -1,5 +1,5 @@
 import turtle as jerry
-
+from random import randint
 
 class Flower():
     """docstring for Flower GUI object"""
@@ -28,6 +28,27 @@ class Flower():
             jerry.right(deg)
         jerry.penup()
 
+class Tree(object):
+    """docstring for Tree."""
+
+    def __init__(self, diameter, trunk_height, trunk_width, x, y):
+        self.diameter = diameter
+        self.trunk_height = trunk_height
+        self.trunk_width = trunk_width
+        self.x = x
+        self.y = y
+
+    def draw(self):
+        jerry.goto(self.x,self.y)
+        jerry.pendown()
+        jerry.pencolor('brown')
+        jerry.pensize(self.trunk_width)
+        jerry.setheading(90)
+        jerry.forward(self.trunk_height)
+        jerry.pencolor('green')
+        jerry.dot(self.diameter)
+        jerry.penup()
+
 class Frame():
     """docstring for Frame GUI object."""
 
@@ -36,6 +57,7 @@ class Frame():
 
     def draw(self):
         jerry.goto((jerry.window_width()/2)-40,(jerry.window_height()/2)-40)
+        jerry.setheading(0)
         jerry.pendown()
         jerry.pencolor(self.color)
         jerry.pensize(20)
@@ -49,8 +71,19 @@ class Frame():
         jerry.backward(jerry.window_height()-80)
         jerry.penup()
 
-flower = Flower(6,"pink", 100, 40, 0, 0)
-frame = Frame("green")
-flower.draw()
+jerry.penup()
+garden = []
+for x in range(20):
+    t = randint(0,1)
+    if t == 0:
+        garden.append(Flower(6,"pink", 100, 40, randint(-1*((jerry.window_width()/2)-40), (jerry.window_width()/2)-40), randint(-1*((jerry.window_height()/2)-40), (jerry.window_height()/2)-40)))
+    else:
+        garden.append(Tree(80, 120, 20, randint(-1*((jerry.window_width()/2)-40), (jerry.window_width()/2)-40), randint(-1*((jerry.window_height()/2)-40), (jerry.window_height()/2)-40)))
+
+frame = Frame("red")
+
+for ob in garden:
+    ob.draw()
+
 frame.draw()
 jerry.done()
